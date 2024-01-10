@@ -1,8 +1,14 @@
+
+
+
 <!DOCTYPE HTML>
 <html lang="en">
 
 
 <head>
+
+
+
     <meta charset="utf-8">
     <title>SMD MART Categories</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -32,6 +38,10 @@
             display: block;
         }
     </style>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-TXOMqpK1FucE5L4CMvvA5LzQoXXxRxFOlJRlTCErOA2Z1iJL+gP8U3p+58SFiNae" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-kJ8UVsw1uNEVRwgT4WkN5t+ylOAeL3+6I1z2Z+U/Dh0o9s2gBjs7In9ktir5sZl" crossorigin="anonymous"></script>
 
 </head>
 
@@ -118,62 +128,126 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
-                        
-                            <form id="categoryForm">
-                                <div class="mb-4">
-                                    <label for="categoryName" class="form-label">Category Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="categoryName" name="categoryName" />
-                                    <div id="error-categoryName" class="text-danger"></div>
-                                   
-                                <div class="mb-4">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" id="description" name="description"></textarea>
-                                    <div id="error-description" class="text-danger"></div>
-                                   
-                                </div>
-                                
-                                <div class="d-grid">
-                                    <button type="button" class="btn btn-primary" onclick="createCategory()">Create category</button>
-                                </div>
-                            </form>
-                        </div> 
-                       
-                          
-                            <div class="col-md-9">
-                                <div class="content-header">
-                                    <div>
-                                        <h2 class="content-title card-title">Sub Categories </h2>
-                                        <p>Add, edit or delete a category</p>
+                        <div class="container-fluid">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 col-lg-6"> <!-- Full-width column with maximum width of lg (large) -->
+                                    <div class="card" style="margin: 10%;">
+                                        <div class="card-body">
+                                            <form id="categoryForm">
+                                                <div class="mb-4">
+                                                    <label for="categoryName" class="form-label">Category Name</label>
+                                                    <input type="text" placeholder="Type here" class="form-control" id="categoryName" name="categoryName" />
+                                                    <div id="error-categoryName" class="text-danger"></div>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <textarea placeholder="Type here" class="form-control" id="description" name="description"></textarea>
+                                                    <div id="error-description" class="text-danger"></div>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <button type="button" class="btn btn-primary" onclick="createCategory()">Create category</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                               
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Category It Belongs</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="subcategoryTable">
-                                            <% subcategories.forEach(subcategory => {%>
-                                                <tr>
-                                                    <td><%=subcategory._id%></td>
-                                                    <td><%=subcategory.name%></td>
-                                                    <td><%=subcategory.category ? subcategory.category.categoryName : ' ' %></td>
-                                                </tr>            
-                                            <%})%>   
-                                                              
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div> 
-                           <!-- .hkrkkcol// -->
+                            </div>
+                        </div>
+                        
+                       <!-- Existing code for Sub Categories -->
+<div class="col-md-12"> <!-- Full-width column -->
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Sub Categories </h2>
+            <p>Add, edit, or delete a category</p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category It Belongs</th>
+                </tr>
+            </thead>
+            <tbody id="subcategoryTable">
+                <% subcategories.forEach(subcategory => {%>
+                    <tr>
+                        <td><%=subcategory._id%></td>
+                        <td><%=subcategory.name%></td>
+                        <td><%=subcategory.category ? subcategory.category.categoryName : ' ' %></td>
+                    </tr>            
+                <%})%>                  
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- New code for Categories -->
+<!-- New code for Categories -->
+<div class="col-md-12 mt-4"> <!-- Full-width column with margin top -->
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Categories </h2>
+            <p>List of created categories</p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th> <!-- New column for description -->
+                    <th>Actions</th> <!-- New column for Edit and Delete buttons -->
+                </tr>
+            </thead>
+            <tbody id="categoryTableBody">
+                <% categories.forEach((category, index) => {%>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= category._id %></td>
+                        <td><%= category.categoryName %></td>
+                        <td><%= category.description %></td> <!-- Display the description -->
+                        <td>
+                            <!-- Edit button -->
+                            <button class="btn btn-warning btn-sm edit-category-btn" data-category-id="<%= category._id %>"
+                                data-category-name="<%= category.categoryName %>" data-category-description="<%= category.description %>">
+                                Edit
+                            </button>
+
+                            <!-- Delete button -->
+                            <button class="btn btn-danger btn-sm" onclick="deleteCategory('<%= category._id %>')">Delete</button>
+                        </td>
+                    </tr>
+                <%})%>                  
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- JavaScript to handle Edit and Delete actions -->
+<script>
+    // function editCategory(categoryId) {
+        // Add your logic to handle edit action here
+    //     console.log('Edit category with ID:', categoryId);
+    // }
+
+    function deleteCategory(categoryId) {
+        // Add your logic to handle delete action here
+        console.log('Delete category with ID:', categoryId);
+    }
+</script>
+
+
                     </div> <!-- .row // -->
                 </div> <!-- card body .// -->
-            </div> 
+            </div>
+            
         </section><!-- content-main end// -->
         <section class="content-main">
             <div class="content-header">
@@ -184,61 +258,58 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <form>
-                                <div class="mb-4">
-                                    <label for="subCategoryName" class="form-label">Sub category Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="subcategoryName" />
-                                </div>
-                                <div class="col-md-15">
-                                    <h6>Select Category</h6>
-                                    <% categories.forEach(category => {%>
-                                    <div class="mb-4">
-                                        <label class="mb-2 form-check form-check-inline" style="width: 45%;">
-                                            <input class="form-check-input" name="selectedCategory" type="radio" value="<%= category._id %>">
-                                            <span class="form-check-label"><%= category.categoryName %></span>
-                                        </label>
-                                    </div>
-                                <%})%>
-                                </div> 
-                                <div class="d-grid">
-                                    <button type="button" class="btn btn-primary" onclick="createSubCategory()">Create Sub category</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="content-header">
-                                <div>
-                                    <h2 class="content-title card-title">Sub Categories </h2>
-                                    <p>Add, edit or delete a category</p>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                           
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Category It Belongs</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="subcategoryTable">
-                                        <% subcategories.forEach(subcategory => {%>
-                                            <tr>
-                                                <td><%=subcategory._id%></td>
-                                                <td><%=subcategory.name%></td>
-                                                <td><%=subcategory.category ? subcategory.category.categoryName : ' ' %></td>
-                                            </tr>            
-                                        <%})%>   
-                                                          
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> <!-- .col// -->
-                    </div> <!-- .row // -->
-                </div> <!-- card body .// -->
+    <div class="row">
+        <div class="col-md-3">
+            <form>
+                <div class="mb-4">
+                    <label for="subCategoryName" class="form-label">Subcategory Name</label>
+                    <input type="text" placeholder="Type here" class="form-control" id="subcategoryName" />
+                </div>
+                <div class="mb-4">
+                    <label for="selectedCategory" class="form-label">Select Category</label>
+                    <select class="form-select" id="selectedCategory" name="selectedCategory">
+                        <option value="" disabled selected>Select Category</option>
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category._id %>"><%= category.categoryName %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="d-grid">
+                    <button type="button" class="btn btn-primary" onclick="createSubCategory()">Create Subcategory</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Subcategories </h2>
+                    <p>Add, edit, or delete a subcategory</p>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category It Belongs</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subcategoryTable">
+                        <% subcategories.forEach(subcategory => { %>
+                            <tr>
+                                <td><%= subcategory._id %></td>
+                                <td><%= subcategory.name %></td>
+                                <td><%= subcategory.category ? subcategory.category.categoryName : ' ' %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- .col// -->
+    </div> <!-- .row // -->
+</div>
+<!-- card body .// -->
             </div> <!-- card .// -->
         </section> 
         <footer class="main-footer font-xs">
@@ -265,6 +336,8 @@
     <script src="assets/js/main.js" type="text/javascript"></script>
             
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    
 
     <script>
        
@@ -357,6 +430,21 @@
                 `)
         }
 
+        $(document).ready(function () {
+        $('.edit-category-btn').click(function () {
+            var categoryId = $(this).data('category-id');
+            var categoryName = $(this).data('category-name');
+            var categoryDescription = $(this).data('category-description');
+
+            $('#editCategoryId').val(categoryId);
+            $('#editCategoryName').val(categoryName);
+            $('#editDescription').val(categoryDescription);
+            $('#editErrorCategoryName').text('');
+
+            $('#editCategoryModal').modal('show');
+        });
+    });
+
     </script>
 
 
@@ -365,7 +453,93 @@
 
 
 
+ <!-- Modal for Edit Category -->
+ <!-- Modal for Edit Category -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryForm">
+                    <div class="mb-4">
+                        <label for="editCategoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="editCategoryName" name="editCategoryName" />
+                    </div>
+                    <div class="mb-4">
+                        <label for="editDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editDescription" name="editDescription"></textarea>
+                    </div>
+                    <div id="editErrorCategoryName" class="text-danger"></div>
+                    <input type="hidden" id="editCategoryId" name="editCategoryId" />
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-primary" onclick="updateCategory()">Update Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+<!-- Your existing JavaScript code -->
+
+<script>
+ function editCategory(categoryId) {
+    // Fetch category details from the server and populate the modal form
+    $('#editCategoryModal').modal('toggle')
+    $.ajax({
+        url: '/admin/getcategorybyid/' + categoryId,
+        method: 'GET',
+        success: function (category) {
+            $('#editCategoryId').val(category._id);
+            $('#editCategoryName').val(category.categoryName);
+            $('#editDescription').val(category.description);
+            $('#editErrorCategoryName').text('');
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
+
+
+ function updateCategory() {
+     const categoryId = $('#editCategoryId').val();
+     const categoryName = $('#editCategoryName').val();
+     const description = $('#editDescription').val();
+     $('#editErrorCategoryName').text('');
+
+     if (!categoryName) {
+         $('#editErrorCategoryName').text('Please enter a category name');
+         return;
+     }
+
+     $.ajax({
+         url: '/admin/updatecategory/' + categoryId,
+         method: 'PUT',
+         contentType: 'application/json',
+         data: JSON.stringify({ categoryName, description }),
+         success: function (data) {
+             console.log(data, 'category updated');
+             $('#editCategoryModal').modal('hide');
+             updateCategoryTable();
+         },
+         error: function (error) {
+             console.error(error);
+         }
+     });
+ }
+
+
+ 
+
+ 
+</script>
 
 
 

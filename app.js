@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', indexRouter);
 app.use('/', usersRouter);
 
-mongoose.connect("mongodb+srv://mbdigiworldinfo:mbdigi@cluster0.zcgt8d7.mongodb.net/?retryWrites=true&w=majority",{
+mongoose.connect("mongodb+srv://smdmartinfo:v795ERLzOhKEmlK1@smdmart.nkdmvst.mongodb.net/smdmart?retryWrites=true&w=majority",{
 }).then(()=>{
   console.log('connected to mongodb');
 }).catch((error)=>{

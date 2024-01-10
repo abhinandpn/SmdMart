@@ -40,7 +40,7 @@ router.get('/getproductcategories',getProductCategories);
 router.get('/getcategorytable',categoryTable);
 router.get('/addnewbrandpage',addNewBrandPage);
 router.get('/getbrandsbycategory',getBrandsByCategory)
-
+router.get('/getcategorybyid')
 
 router.post('/createcategories',createCategories);
 router.post('/postsubcategory',createSubcategory);

@@ -21,9 +21,13 @@ const {
   addNewBrandPage,
   addBrand,
   getBrandsByCategory,
-  addProduct
-
+  addProduct,
+  updateCategory,
+  deleteSubcategory,
+  deleteCategory,
+deleteProduct
 } = require('../Controllers/adminControllers');
+const { uploads } = require('../multer/multer');
 
 
 router.get('/',getAdminHomePage);
@@ -40,11 +44,24 @@ router.get('/getproductcategories',getProductCategories);
 router.get('/getcategorytable',categoryTable);
 router.get('/addnewbrandpage',addNewBrandPage);
 router.get('/getbrandsbycategory',getBrandsByCategory)
-router.get('/getcategorybyid')
+
+
+
+
+router.put('/updatecategory/:categoryId', updateCategory);
+
+
+
+router.delete('/deletesubcategory/:id',deleteSubcategory);
+router.delete('/deletecategory/:categoryId', deleteCategory);
+router.delete('/deleteproduct/:productId',deleteProduct)
+
+
 
 router.post('/createcategories',createCategories);
 router.post('/postsubcategory',createSubcategory);
 router.post('/addbrand',upload.single('image'),addBrand);
-router.post('/addproduct',upload.single('image'), addProduct)
+// router.post('/addproduct',upload.single('image'), addProduct)
+router.post('/addproduct',uploads,addProduct);
 
 module.exports = router;

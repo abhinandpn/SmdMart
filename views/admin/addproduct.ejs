@@ -188,9 +188,12 @@
                                 <div class="col-md-9">
                                     <div class="mb-4">
                                         <label class="form-label">Images</label>
-                                        <input class="form-control" type="file" onchange="previewImage(this)" name="image">
-                                        <img id="imagePreview" src="" alt="" style="max-width: 100%; max-height: 200px; margin-top: 10px; display: none;">
+                                        <input class="form-control" id="image" type="file" multiple onchange="previewImages(this)" name="image">
+                                        <div id="imagePreviews" style="display: flex; flex-wrap: wrap; margin-top: 10px;"></div>
                                     </div>
+                                    <input type="hidden" id="selectedCategory" name="category">
+                                    <input type="hidden" id="selectedSubcategory" name="subCategory">
+                                    <input type="hidden" id="selectedBrand" name="brandName">
                                     <div>
                                         <button  type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
                                     </div>
@@ -229,50 +232,90 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
-        function previewImage(input){
-            const preview = document.getElementById('imagePreview');
-            const fileInput = input.files[0];
-            if(fileInput){
-                const reader = new FileReader();
-                reader.onload = function(e){
-                    console.log('file onload ');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.onerror = function(e){
-                    console.error('file reader error');
+        function previewImages(input) {
+            const previewContainer = document.getElementById('imagePreviews');
+            previewContainer.innerHTML = ''; // Clear previous previews
+    
+            const files = input.files;
+    
+            if (files) {
+                for (const file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const preview = document.createElement('img');
+                        preview.src = e.target.result;
+                        preview.style.maxWidth = '100%';
+                        preview.style.maxHeight = '200px';
+                        preview.style.marginRight = '10px';
+                        previewContainer.appendChild(preview);
+                    };
+                    reader.onerror = function (e) {
+                        console.error('File reader error');
+                    };
+                    reader.readAsDataURL(file);
                 }
-                reader.readAsDataURL(fileInput);
-            }else{
-                console.log('no file selected');
-                preview.src = '';
-                preview.style.display = 'none';
+            } else {
+                console.log('No files selected');
             }
         }
     </script>
 
-    <script>
-        $(document).ready(function(){
-            $('#addProductForm').submit(function(e){
-                e.preventDefault();
-                const formData = new FormData(this);
-                $.ajax({
-                    url : '/admin/addproduct',
-                    method : 'POST',
-                    data : formData,
-                    contentType : false,
-                    processData : false,
-                    
-                    success : function(data){
-                        console.log(data);
-                    },
-                    error : function(error){
-                        console.error(error);
-                    }
-                })
-            })
-        })
-    </script>
+<script>
+    $(document).ready(function () {
+        // Update hidden input fields when dropdowns change
+        $('#category').change(function () {
+            $('#selectedCategory').val($(this).val());
+        });
+
+        $('#subcategory').change(function () {
+            $('#selectedSubcategory').val($(this).val());
+        });
+
+        $('#brand').change(function () {
+            $('#selectedBrand').val($(this).val());
+        });
+        $('#image').change(function () {
+            document.getElementById('imagePreviews');
+        });
+
+
+        // Submit form using AJAX
+        $('#addProductForm').submit(function (e) {
+            e.preventDefault();
+
+            const formData = new FormData($('#addProductForm')[0]);
+
+        // Append text fields to FormData
+        // formData.append('title', $('#productTitle').val());
+        // formData.append('description', $('#description').val());
+         // formData.append('cost', $('#cost').val());
+        formData.set('category', $('#category :selected').val());
+        formData.set('subCategory', $('#subcategory :selected').val());
+        // formData.append('brand', $('#brand').val());
+
+        // Append each image file to FormData
+        // const images = $('#image')[0].files;
+        // for (const image of images) {
+        //     formData.append('images', image);
+        // }
+            console.log(formData.values());
+            $.ajax({
+                url: '/admin/addproduct',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 
 
 

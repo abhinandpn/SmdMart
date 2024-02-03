@@ -18,7 +18,7 @@ const allProductsSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Category'
     },
-
+  
     subCategory : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Subcategory',
@@ -28,8 +28,8 @@ const allProductsSchema = new mongoose.Schema({
         type : String
     },
 
-    image : {
-        type : String
+    images : {
+        type : Array
     }
 });
 

@@ -142,6 +142,7 @@
                 </header> <!-- card-header end// -->
                 <div class="card-body">
                     <% products.forEach(product => {%>
+                        <div class="<%=product._id%>">
                     <article class="itemlist">
                         <div class="row align-items-center">
                             <div class="col col-check flex-grow-0">
@@ -152,7 +153,7 @@
                             <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                                 <a class="itemside" href="#">
                                     <div class="left">
-                                        <img src="/uploads/<%=product.image%>" class="img-sm img-thumbnail">
+                                        <img src=" <%=product.images[0]%>" class="img-sm img-thumbnail">
                                     </div>
                                     <div class="info">
                                         <h6 class="mb-0"><%=product.productTitle%></h6>
@@ -170,15 +171,44 @@
                                 <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                     <i class="material-icons md-edit"></i> Edit
                                 </a>
-                                <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                    <i class="material-icons md-delete_forever"></i> Delete
-                                </a>
+                               <button class="btn btn-danger btn-sm" onclick="deleteProduct('<%= product._id %>')">Delete</button>
                             </div>
                         </div> <!-- row .// -->
                     </article>
+                </div>
                  <%})%> <!-- itemlist  .// -->
                 </div> <!-- card-body end// -->
             </div> <!-- card end// -->
+
+            <script>
+
+function deleteProduct(productId){
+    console.log(productId,'rrrrrrrrrrrrr');
+
+    const isConfirmed = confirm('Are you sure you want to delete this Product')
+    if(isConfirmed){
+        console.log('log...........')
+
+        $.ajax({
+            url: '/admin/deleteproduct/' + productId,
+            method:'DELETE',
+            success:function(data){
+                console.log(data,"ooooooooooooooooo")
+                $(`.${productId}`).remove();
+            },  
+
+            error: function(error){
+                console.log(error)
+            }
+        })
+    }
+}
+
+
+
+            </script>
+
+
             <div class="pagination-area mt-30 mb-50">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-start">

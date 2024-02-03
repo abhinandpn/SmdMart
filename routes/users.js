@@ -8,7 +8,8 @@ const {
   getProductDetails,
   getContactPage,
   getCartPage,
-  getCheckOut
+  getCheckOut,
+  categoryFilter
 
 } = require('../Controllers/userController')
 
@@ -18,5 +19,6 @@ router.get('/productdetails',getProductDetails);
 router.get('/contacts',getContactPage);
 router.get('/getcart',getCartPage);
 router.get('/getcheckout',getCheckOut)
+router.get('/categoryfilter/:id',categoryFilter);
 
 module.exports = router;

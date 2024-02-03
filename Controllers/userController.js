@@ -17,7 +17,10 @@ module.exports = {
     getAllProductsPage : async(req,res)=>{
         try{
             const products = await Allproducts.find().populate('category');
-            const categories = await Category.find();
+            const categories = await Category.find()
+            console.log(products,'hhhhhhhhhh1');
+            console.log(categories,'hhhhhhhhhh');
+
             res.render('user/allproducts',{products, categories});
         }catch(error){
             console.log(error);
@@ -54,5 +57,20 @@ module.exports = {
         }catch(error){
             console.log(error);
         }
+    },
+
+    categoryFilter: async(req,res)=>{
+        try{
+            const categoryId= req.params.id
+            const categories = await Category.find()
+             const products = await Allproducts.find({ 'category': categoryId });
+     console.log(products,"ttttttttttttttttttjjjjjjjjjjjjjj");
+
+     res.render('user/categoryfilterpage',{products,categories});
+        }catch(error){
+      console.log(error);
+        }
     }
+
+    
 }
